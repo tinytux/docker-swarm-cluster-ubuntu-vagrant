@@ -7,6 +7,8 @@ node_ip_addr = IPAddr.new first_node_ip
 Vagrant.configure(2) do |config|
   config.vm.box = 'ubuntu-16.04-amd64'
 
+  config.vm.synced_folder ".", "/vagrant", type: :nfs, :mount_options => ['nolock,vers=3,udp,noatime']
+
   config.vm.provider 'virtualbox' do |vb|
     vb.linked_clone = true
     vb.memory = 2*1024
