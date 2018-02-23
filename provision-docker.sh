@@ -10,7 +10,7 @@ export DEBIAN_FRONTEND=noninteractive
 # see https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository
 apt-get install -y apt-transport-https software-properties-common
 wget -qO- https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+add-apt-repository "deb [arch=amd64] http://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 apt-get update
 apt-get install -y docker-ce
 

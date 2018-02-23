@@ -23,6 +23,7 @@ Vagrant.configure(2) do |config|
     config.vm.define name do |config|
       config.vm.hostname = fqdn
       config.vm.network :private_network, ip: ip
+      config.vm.provision 'shell', path: 'provision-apt-proxy.sh'
       config.vm.provision 'shell', path: 'provision-base.sh'
       config.vm.provision 'shell', path: 'provision-certification-authority.sh'
       config.vm.provision 'shell', path: 'provision-hosts.sh', args: [ip]
