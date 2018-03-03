@@ -10,7 +10,13 @@ export DEBIAN_FRONTEND=noninteractive
 # see https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository
 apt-get install -y apt-transport-https software-properties-common
 wget -qO- https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-add-apt-repository "deb [arch=amd64] http://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+UBUNTU_RELEASE="$(lsb_release -cs)"
+# Bionic release not available today - artful seems to work as fallback.
+if [[ ${UBUNTU_RELEASE} == "bionic" ]]; then
+    UBUNTU_RELEASE="artful"
+fi
+add-apt-repository "deb [arch=amd64] http://download.docker.com/linux/ubuntu ${UBUNTU_RELEASE} stable"
 apt-get update
 apt-get install -y docker-ce
 
@@ -42,4 +48,4 @@ ip link
 bridge link
 docker run --rm hello-world
 docker run --rm alpine cat /etc/resolv.conf
-docker run --rm alpine ping -c1 8.8.8.8
+#docker run --rm alpine ping -c1 8.8.8.8

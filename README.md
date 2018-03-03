@@ -2,7 +2,8 @@ a 3-node docker swarm cluster wrapped in a vagrant environment
 
 # Usage
 
-Build and install the [Ubuntu Linux Base Box](https://github.com/rgl/ubuntu-vagrant).
+Build and install the [Ubuntu Bionic Base Box (18.04)](https://github.com/tinytux/vms).
+
 
 Add the following entries to your `/etc/hosts` file:
 
