@@ -11,6 +11,10 @@ fi
 DEBIAN_FRONTEND=noninteractive
 
 DEFAULT_GATEWAY=$(ip route | grep "default via " | cut -d ' ' -f 3)
+if ! nc -z ${DEFAULT_GATEWAY} 3142; then
+    DEFAULT_GATEWAY=$(nmap ${DEFAULT_GATEWAY}/24 -n -T insane -p3142 -oG - | grep apt-cacher | head -n1 | awk '{print $2}')
+fi
+
 if [[ ! -n "$(grep  "Acquire::http::Proxy" /etc/apt/apt.conf)" ]]; then
 
     if [[ ! -e /bin/nc ]]; then
