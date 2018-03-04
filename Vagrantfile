@@ -10,6 +10,12 @@ Vagrant.configure(2) do |config|
 
   config.vm.synced_folder ".", "/vagrant", type: :nfs, :mount_options => ['nolock,vers=3,udp,noatime']
 
+  config.vm.provider "vmware_workstation" do |vmware|
+    vmware.gui = false
+    vmware.vmx["memsize"] = 2048
+    vmware.vmx["numvcpus"] = 4
+  end
+
   config.vm.provider 'virtualbox' do |vb|
     vb.linked_clone = true
     vb.memory = 2*1024
