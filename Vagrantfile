@@ -1,6 +1,6 @@
 require 'ipaddr'
 
-number_of_nodes = 3
+number_of_nodes = 5
 first_node_ip = '10.10.0.201'
 node_ip_addr = IPAddr.new first_node_ip
 
@@ -35,7 +35,7 @@ Vagrant.configure(2) do |config|
       config.vm.provision 'shell', path: 'provision-certification-authority.sh'
       config.vm.provision 'shell', path: 'provision-hosts.sh', args: [ip]
       config.vm.provision 'shell', path: 'provision-docker.sh'
-      config.vm.provision 'shell', path: 'provision-docker-swarm.sh', args: [ip, first_node_ip]
+      config.vm.provision 'shell', path: 'provision-docker-swarm.sh', args: [ip, first_node_ip, n]
       config.vm.provision 'shell', path: 'provision-registry.sh' if ip == first_node_ip
       config.vm.provision 'shell', path: 'provision-portainer.sh' if ip == first_node_ip
       config.vm.provision 'shell', path: 'provision-examples.sh' if ip == first_node_ip

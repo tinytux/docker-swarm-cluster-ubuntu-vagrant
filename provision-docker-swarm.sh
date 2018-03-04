@@ -3,6 +3,7 @@ set -eux
 
 ip=$1
 first_node_ip=$2
+node_number=$3
 
 # if this is the first node, init the swarm, otherwise, join it.
 if [ "$ip" == "$first_node_ip" ]; then
@@ -20,9 +21,15 @@ if [ "$ip" == "$first_node_ip" ]; then
     docker swarm join-token manager -q >/vagrant/shared/docker-swarm-join-token-manager.txt
     docker swarm join-token worker -q >/vagrant/shared/docker-swarm-join-token-worker.txt
 else
-    # join the swarm as a manager.
+    # make first 3 nodes managers, all others workers
+    role="manager"
+    if [ $node_number -gt 3 ]; then
+        role="worker"
+    fi
+
+    # join the swarm
     docker swarm join \
-        --token $(cat /vagrant/shared/docker-swarm-join-token-manager.txt) \
+        --token $(cat /vagrant/shared/docker-swarm-join-token-${role}.txt) \
         "$first_node_ip:2377"
 fi
 
