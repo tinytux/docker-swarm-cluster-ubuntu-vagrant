@@ -15,6 +15,13 @@ if ! nc -z ${DEFAULT_GATEWAY} 3142; then
     DEFAULT_GATEWAY=$(nmap ${DEFAULT_GATEWAY}/24 -n -T insane -p3142 -oG - | grep apt-cacher | head -n1 | awk '{print $2}')
 fi
 
+echo -n "Waiting for apt to terminate..."
+while  [[ -n "$(fuser /var/lib/dpkg/lock >/dev/null 2>&1)" ]]; do
+    sleep 2
+    echo -n "."
+done
+echo "OK"
+
 if [[ ! -n "$(grep  "Acquire::http::Proxy" /etc/apt/apt.conf)" ]]; then
 
     if [[ ! -e /bin/nc ]]; then
